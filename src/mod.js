@@ -44,23 +44,28 @@ class MICC {
     }
 
     allowMiccIntoSecureContainers(itemId) {
+        // nootropix mod for secure containers conflict with this mod, so we try to make a compromise
         const NOOTROPIX_MOD = "Nootropix-BigSecureCases";
+        const secureContainers = {
+            "kappa": "5c093ca986f7740a1867ab12",
+            "gamma": "5857a8bc2459772bad15db29",
+            "epsilon": "59db794186f77448bc595262",
+            "beta": "5857a8b324597729ab0a0e7d",
+            "alpha": "544a11ac4bdc2d470e8b456a",
+            "waistPouch": "5732ee6a24597719ae0c0281"
+        };
 
         if (coreMod.IsModLoaded(NOOTROPIX_MOD)) {
-            const secureContainers = {
-                "kappa": "5c093ca986f7740a1867ab12",
-                "gamma": "5857a8bc2459772bad15db29",
-                "epsilon": "59db794186f77448bc595262",
-                "beta": "5857a8b324597729ab0a0e7d",
-                "alpha": "544a11ac4bdc2d470e8b456a",
-                "waistPouch": "5732ee6a24597719ae0c0281"
-            };
             const configFilePath = `${ModLoader.getModPath(NOOTROPIX_MOD)}config/config.json`;
             const { cases } = JsonUtil.deserialize(VFS.readFile(configFilePath));
 
             for (const secureCase in cases) {
                 if (secureCase.removeFilters) continue;
 
+                DatabaseServer.tables.templates.items[secureContainers[secureCase]]._props.Grids[0]._props.filters[0].Filter.push(itemId)
+            }
+        } else {
+            for (const secureCase in secureContainers) {
                 DatabaseServer.tables.templates.items[secureContainers[secureCase]]._props.Grids[0]._props.filters[0].Filter.push(itemId)
             }
         }
