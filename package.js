@@ -1,3 +1,3 @@
 const { Mod } = require("./src/mod.js");
 
-module.exports.mod = new Mod();
+ModLoader.onLoad[Mod.MOD_NAME] = Mod.Start
