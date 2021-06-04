@@ -1,7 +1,7 @@
 {
     "name": "MICC",
     "author": "Revingly",
-    "version": "1.0.0",
+    "version": "1.4",
     "license": "NCSA",
     "dependencies": {},
     "main": "package.js"
