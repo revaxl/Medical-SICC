@@ -92,7 +92,7 @@ class MICC {
             const { cases } = JsonUtil.deserialize(VFS.readFile(configFilePath));
 
             for (const secureCase in cases) {
-                if (secureCase.removeFilters) continue;
+                if (cases[secureCase].removeFilters) continue;
 
                 DatabaseServer.tables.templates.items[secureContainers[secureCase]]
                     ._props
