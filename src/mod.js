@@ -7,29 +7,32 @@ class MICC {
 
     static Start() {
         Logger.info(`Loading: ${MICC.MOD_NAME}`);
+        const { price, trader_loyalty_level } = require('./config.json');
         const MEDS = "543be5664bdc2dd4348b4569";
         const SMALL_SICC_ID = "5d235bb686f77443f4331278";
+        const INJECTOR_CASE = "619cbf7d23893217ec30b689";
+        const MEDICAL_SUPPLIES = "57864c8c245977548867e7f1"
 
         const handbook = DatabaseServer.tables.templates.handbook.Items;
         const locales = DatabaseServer.tables.locales.global;
 
         const itemId = "Revingly_MICC",
             itemCategory = "5795f317245977243854e041",
-            itemFleaPrice = 100000,
+            itemFleaPrice = price,
             itemPrefabPath = "micc.bundle",
             itemName = "Medical SICC",
             itemShortName = "MICC",
             itemDescription = "SICC for med items",
             itemTrader = "54cb57776803fa99248b456e", //Therapist
-            itemTraderPrice = 100000,
-            itemTraderLV = 1;
+            itemTraderPrice = price,
+            itemTraderLV = trader_loyalty_level;
 
         const therapist = DatabaseServer.tables.traders[itemTrader];
 
         const item = JsonUtil.clone(DatabaseServer.tables.templates.items[SMALL_SICC_ID]);
         item._id = itemId;
         item._props.Prefab.path = itemPrefabPath;
-        item._props.Grids[0]._props.filters[0].Filter = [MEDS]; // allow only meds stuff
+        item._props.Grids[0]._props.filters[0].Filter = [MEDS, INJECTOR_CASE, MEDICAL_SUPPLIES]; // allow only meds stuff, including med supplies
         item._props.Grids[0]._props.cellsH = 4;
         item._props.Grids[0]._props.cellsV = 4;
         DatabaseServer.tables.templates.items[itemId] = item;
